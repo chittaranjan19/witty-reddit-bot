@@ -1,13 +1,21 @@
 import pandas as pd
 import praw
 from tqdm import tqdm
+import os
+
+
+client_id = os.environ["CLIENT_ID"]
+client_secret = os.environ["CLIENT_ID"]
+password = os.environ["REDDIT_PASSWORD"]
+user_agent = os.environ["USER_AGENT"]
+username = os.environ["REDDIT_USERNAME"]
 
 reddit = praw.Reddit(
-    client_id="Fx7jTBqWbi0Z2mdLr8tGhg",
-    client_secret="pAQWFz_tjmlLnaz48gggoIz7TT1q2w",
-    password="Drog1234%",
-    user_agent="script:si630:v0.1 (by u/whoisjoe1)",
-    username="whoisjoe1",
+    client_id=client_id,
+    client_secret=client_secret,
+    password=password,
+    user_agent=user_agent,
+    username=username,
 )
 
 submission_ids = []
