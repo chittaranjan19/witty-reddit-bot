@@ -22,13 +22,16 @@ class UnigramLM:
         perplexity = math.exp(-log_probability / len(tokens))
         return perplexity
 
-    def evaluate(self, texts):
+    def evaluate(self, eval_df):
         """
-        texts: list of strings, that need to be evaluated
+        eval_df: pd.DataFrame of input and corresponding expected output
 
         returns:
         list of perplexities for each test string, and mean perplexity score for all texts
         """
+
+        # ignore inputs here
+        texts = eval_df["Output"]
         ps = []
         for text in texts:
             tokens = self.tokenizer.encode_plus(text.lower())

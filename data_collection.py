@@ -3,9 +3,11 @@ import praw
 from tqdm import tqdm
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
 
 client_id = os.environ["CLIENT_ID"]
-client_secret = os.environ["CLIENT_ID"]
+client_secret = os.environ["CLIENT_SECRET"]
 password = os.environ["REDDIT_PASSWORD"]
 user_agent = os.environ["USER_AGENT"]
 username = os.environ["REDDIT_USERNAME"]
@@ -26,7 +28,7 @@ comment_scores = []
 comment_ids = []
 comment_text = []
 
-for submission in tqdm(reddit.subreddit("tifu+Showerthoughts+Jokes+oneliners").top(time_filter="all", limit=200), total=200):
+for submission in tqdm(reddit.subreddit("tifu+Showerthoughts+Jokes+oneliners").top(time_filter="week", limit=70), total=70):
     if submission.num_comments > 100:
         submission_ids.append(submission.id)
         titles.append(submission.title)
@@ -43,7 +45,7 @@ for submission in tqdm(reddit.subreddit("tifu+Showerthoughts+Jokes+oneliners").t
                 comment_text_for_submission.append(top_level_comment.body)
                 comment_ids_for_submission.append(top_level_comment.id)
                 comment_scores_for_submission.append(top_level_comment.score)
-        comment_scores.append(comment_scores)
+        comment_scores.append(comment_scores_for_submission)
         comment_ids.append(comment_ids_for_submission)
         comment_text.append(comment_text_for_submission)
 
@@ -57,4 +59,4 @@ data = pd.DataFrame({
     "comment_text": comment_text
 })
 
-data.to_csv("reddit.csv")
+data.to_pickle("reddit_eval.pkl")
